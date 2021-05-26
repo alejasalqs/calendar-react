@@ -1,9 +1,6 @@
 import React from "react";
+import { AppRouter } from "./routes/AppRouter";
 
 export const CalendarApp = () => {
-  return (
-    <div>
-      <h1>Hola Mundo</h1>
-    </div>
-  );
+  return <AppRouter />;
 };
