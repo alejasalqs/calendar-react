@@ -7,6 +7,8 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { messages } from "../../helpers/calendarConfig";
 import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
+import { useDispatch } from "react-redux";
+import { uiOpenModal } from "../../actions/ui";
 
 // Cambio de idioma de moment a español
 moment.locale("es");
@@ -31,8 +33,13 @@ export const CalendarScreen = () => {
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastview") || "month"
   );
+
+  const dispatch = useDispatch();
+
   const onDoubleClick = (e) => {
-    console.log(e);
+    //console.log(e);
+    //console.log("Doble click abrir modal");
+    dispatch(uiOpenModal());
   };
 
   const onSelectEvent = (e) => {
