@@ -7,27 +7,17 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { messages } from "../../helpers/calendarConfig";
 import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiOpenModal } from "../../actions/ui";
+import { setActiveEvent } from "../../actions/events";
+import { AddNewFab } from "../ui/AddNewFab";
+import { DeleteEventFab } from "../ui/DeleteEventFab";
 
 // Cambio de idioma de moment a español
 moment.locale("es");
 
 // Esto usa la configuracion de momento para las fechas
 const localizer = momentLocalizer(moment);
-
-const eventsList = [
-  {
-    title: "Este es el titulo que se muestra",
-    start: moment().toDate(), // Get date pero con moment
-    end: moment().add(2, "hour").toDate(), // Agregar 2 horas a la actual
-    bgcolog: "#fafafa",
-    user: {
-      uid: "123",
-      name: "Alejandro",
-    },
-  },
-];
 
 export const CalendarScreen = () => {
   const [lastView, setLastView] = useState(
@@ -36,14 +26,18 @@ export const CalendarScreen = () => {
 
   const dispatch = useDispatch();
 
+  const { activeEvent } = useSelector((state) => state.calendar);
+
+  const { events } = useSelector((state) => state.calendar);
+
   const onDoubleClick = (e) => {
     //console.log(e);
-    //console.log("Doble click abrir modal");
     dispatch(uiOpenModal());
   };
 
   const onSelectEvent = (e) => {
-    console.log(e);
+    //console.log(e);
+    dispatch(setActiveEvent(e));
   };
 
   const onViewChanged = (e) => {
@@ -74,7 +68,7 @@ export const CalendarScreen = () => {
         <Calendar
           className="pt-5"
           localizer={localizer}
-          events={eventsList}
+          events={events}
           startAccessor="start"
           endAccessor="end"
           messages={messages}
@@ -89,6 +83,9 @@ export const CalendarScreen = () => {
         />
 
         <CalendarModal />
+
+        <AddNewFab />
+        {activeEvent && <DeleteEventFab />}
       </div>
     </>
   );
