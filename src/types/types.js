@@ -1,4 +1,10 @@
 export const types = {
+  login: "[Auth] Login",
+  logout: "[Auth] LogOut",
+  authCheking: "[Auth] Checking Login State",
+  authChekingFinish: "[Auth] Checking Login State Finish",
+  authStartRegister: "[Auth] Start Register",
+  authStartTokenRenew: "[Auth] Token renew",
   uiOpenModal: "[UI] Open Modal",
   uiCloseModal: "[UI] Close Modal",
   eventAddNew: "[Events] Add new event",
