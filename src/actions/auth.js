@@ -36,6 +36,17 @@ const checkingFinish = () => ({
   type: types.authCheckingFinish,
 });
 
+export const startLogOut = () => {
+  return async (dispatch) => {
+    localStorage.clear();
+    dispatch(logOut());
+  };
+};
+
+const logOut = () => ({
+  type: types.logout,
+});
+
 export const startRegister = (name, email, password) => {
   return async (dispatch) => {
     // llamamos el custom fetch del helper

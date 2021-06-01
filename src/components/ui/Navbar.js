@@ -1,9 +1,17 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { startLogOut } from "../../actions/auth";
 
 export const Navbar = () => {
+  const { name } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const onLogOut = () => {
+    dispatch(startLogOut());
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a className="navbar-brand">Andrés</a>
+      <a className="navbar-brand">{name}</a>
 
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
@@ -14,7 +22,7 @@ export const Navbar = () => {
           </li>
         </ul>
       </div>
-      <button className="btn btn-outline-danger">
+      <button className="btn btn-outline-danger" onClick={onLogOut}>
         <i className="fas fa-sign-out-alt"></i>
         <span> Salir</span>
       </button>
