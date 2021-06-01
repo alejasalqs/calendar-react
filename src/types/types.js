@@ -7,9 +7,12 @@ export const types = {
   authStartTokenRenew: "[Auth] Token renew",
   uiOpenModal: "[UI] Open Modal",
   uiCloseModal: "[UI] Close Modal",
+  eventStartAddNew: "[Events] Start Add New",
   eventAddNew: "[Events] Add new event",
   eventDelete: "[Events] Delete event",
   eventUpdate: "[Events] Update event",
   eventSetActive: "[Events] Set active event",
   eventDeleteActive: "[Events] Delete active event",
+  eventLoaded: "[Events] Events Loaded",
+  eventLogOut: "[Events] Logout events",
 };

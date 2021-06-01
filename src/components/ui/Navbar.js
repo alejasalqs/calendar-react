@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { startLogOut } from "../../actions/auth";
+import { eventLogout } from "../../actions/events";
 
 export const Navbar = () => {
   const { name } = useSelector((state) => state.auth);
@@ -8,6 +9,7 @@ export const Navbar = () => {
 
   const onLogOut = () => {
     dispatch(startLogOut());
+    //dispatch(eventLogout());
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">

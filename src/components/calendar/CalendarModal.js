@@ -9,6 +9,8 @@ import {
   deleteActiveEvent,
   eventAddNew,
   eventUpdated,
+  startEventAddNew,
+  startEventUpdate,
 } from "../../actions/events";
 
 const customStyles = {
@@ -112,19 +114,10 @@ export const CalendarModal = () => {
 
     if (activeEvent) {
       // Si existe llamamos la opcion de actualizar
-      dispatch(eventUpdated(formValues));
+      dispatch(startEventUpdate(formValues));
     } else {
       // Si no existe entonces llamamos la opcion de agregar
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          id: new Date().getTime(),
-          user: {
-            _id: "123",
-            name: "Alejo Pruebas",
-          },
-        })
-      );
+      dispatch(startEventAddNew(formValues));
     }
 
     setTitleValid(true);
