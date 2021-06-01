@@ -1,7 +1,7 @@
 // Helpers que nos ayuda a mandar el token al backend
 const BASE_URL = process.env.REACT_APP_API_URL;
 
-export const fetchWithOutToken = (endpoint, data, method = "GET") => {
+export const fetchWithOutToken = (endpoint, data = {}, method = "GET") => {
   // Esta funcion no lleva token
   const URL = `${BASE_URL}/${endpoint}`;
 
@@ -13,6 +13,32 @@ export const fetchWithOutToken = (endpoint, data, method = "GET") => {
       method,
       headers: {
         "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+};
+
+export const fetchWithToken = (endpoint, data = {}, method = "GET") => {
+  // Esta funcion lleva headers personalizados
+  const URL = `${BASE_URL}/${endpoint}`;
+  const token = localStorage.getItem("token") || "no-token";
+
+  if (method === "GET") {
+    // Devuelve la funcion fetch
+    return fetch(URL, {
+      method,
+      headers: {
+        "Content-type": "application/json",
+        "x-token": token,
+      },
+    });
+  } else {
+    return fetch(URL, {
+      method,
+      headers: {
+        "Content-type": "application/json",
+        "x-token": token,
       },
       body: JSON.stringify(data),
     });

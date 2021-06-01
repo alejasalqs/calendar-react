@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { fetchWithOutToken } from "../helpers/fetch";
+import { fetchWithOutToken, fetchWithToken } from "../helpers/fetch";
 import { types } from "../types/types";
 
 export const startLogin = (email, password) => {
@@ -22,7 +22,7 @@ export const startLogin = (email, password) => {
       );
     } else {
       Swal.fire("Error", body.error, "error");
-      return;
+      dispatch(checkingFinish());
     }
   };
 };
@@ -30,6 +30,10 @@ export const startLogin = (email, password) => {
 const login = (user) => ({
   type: types.login,
   payload: user,
+});
+
+const checkingFinish = () => ({
+  type: types.authCheckingFinish,
 });
 
 export const startRegister = (name, email, password) => {
@@ -42,8 +46,6 @@ export const startRegister = (name, email, password) => {
     );
 
     const body = await resp.json();
-
-    console.log(body);
 
     if (body.ok) {
       // Validamos que la respuestas sea correcta y grabamos en el localStorage
@@ -58,7 +60,30 @@ export const startRegister = (name, email, password) => {
       );
     } else {
       Swal.fire("Error", body.error, "error");
-      return;
+      dispatch(checkingFinish());
+    }
+  };
+};
+
+export const startChecking = () => {
+  return async (dispatch) => {
+    const resp = await fetchWithToken("auth/renew");
+    const body = await resp.json();
+
+    if (body.ok) {
+      // Validamos que la respuestas sea correcta y grabamos en el localStorage
+      localStorage.setItem("token", body.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
+
+      dispatch(
+        login({
+          uid: body.uid,
+          name: body.name,
+        })
+      );
+    } else {
+      Swal.fire("Error", body.error, "error");
+      dispatch(checkingFinish());
     }
   };
 };
